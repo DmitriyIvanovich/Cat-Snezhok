@@ -11,12 +11,44 @@ class Cat {
             this.state[obj.name] = obj
             this.__createState(this.state[obj.name])
         }
-        
+
         this.buffer = []
         this.buffer.limitation = 5
         this.buffer.currentState
 
-        setInterval(() => { this.runState() }, 40)
+        this.acctive = false
+        this.time = 40
+        setInterval(() => { if (this.acctive === true) this.runState() }, this.time)
+    }
+    __run(number) {
+        if (typeof number === "number" && number > 0) {
+            const counter = (cb) => {
+                let num = number
+                let time = this.time
+                tick(cb)
+
+                function tick(cb) {
+                    if (num <= 0) return
+                    num--
+                    // print(num)
+                    setTimeout(() => {
+                        cb()
+                        tick(cb)
+                    }, time)
+                }
+            }
+            print(this)
+            counter(() => this.runState())
+
+            return
+        }
+        this.acctive = true
+    }
+    __pause() {
+        this.acctive = false
+    }
+    __isActive() {
+        return this.acctive
     }
 
     __createState(obj) {
@@ -36,20 +68,20 @@ class Cat {
     }
 
     addAction(name, cb) {
-        if (this.buffer.length >= this.buffer.limitation){
+        if (this.buffer.length >= this.buffer.limitation) {
             print("Буфер очереди состояний переполнен. Величина очереди:", this.buffer.length)
             return false
         }
-        const object = Object.assign({},this.state[name])
+        const object = Object.assign({}, this.state[name])
         object.cb = cb
         this.buffer.push(object)
 
         object.spriteNumberNow = null       //какой спрайт в данный момент виден (от 0 до (число спрайтов -1))
     }
 
-    removeAction(obj){
+    removeAction(obj) {
         const index = this.buffer.indexOf(obj)
-        if(index === -1){
+        if (index === -1) {
             print("обьект не найден")
             return false
         }
@@ -73,7 +105,7 @@ class Cat {
             if (obj !== this.buffer[this.buffer.length - 1]) {
                 obj.imgs[obj.spriteNumberNow].hidden = true
                 obj.spriteNumberNow = null
-                
+
                 obj = this.buffer.currentState = this.buffer[this.buffer.length - 1]
                 this.runState()
                 return
@@ -104,10 +136,30 @@ const Bug = new Cat([
     { name: "base", root: images, url: ["./img//basic/f_", ".png"], number: 20 },
     { name: "blink", root: images, url: ["./img/blink/hh_", ".png"], number: 20 }
 ])
+
 Bug.addAction("base", () => print("Туц туц"))
+Bug.__run(1)
 
-// setTimeout(() => {
-    
-// }, 1000)
+document.addEventListener("click", () =>{
+    Bug.__run()
 
-document.addEventListener("click", () => Bug.addAction("blink", (action) => Bug.removeAction(action)))
+    document.addEventListener("click", () => {
+        Bug.addAction("blink", (action) => Bug.removeAction(action))
+    })
+}, {once: true})
+
+document.addEventListener("DOMContentLoaded", sound);
+
+
+
+function sound() {
+    document.body.insertAdjacentHTML("beforeend", `<audio id="bg_sound" src="./sound/track_1.mp3"></audio>`)
+    document.addEventListener('click', event => {
+        const bgcPlayer = document.getElementById('bg_sound');
+        bgcPlayer.volume = 0.2;
+        bgcPlayer.muted = true;
+        bgcPlayer.muted = false;
+        bgcPlayer.play();
+        bgcPlayer.loop = true;
+    });
+}
