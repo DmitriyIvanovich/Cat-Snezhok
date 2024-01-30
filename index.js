@@ -166,12 +166,11 @@ setTimeout(() => {
 
 modal_window.addEventListener("click", event => {
     const target = event.target
-    if (target.closest(".button.no")) {
-        print("no")
+    if (target.closest(".button.yes")) {
         modal_window.remove()
         return
     }
-    if (target.closest(".button.yes")) {
+    if (target.closest(".button.no")) {
         soundStarted()
         modal_window.remove()
         return
