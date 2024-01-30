@@ -162,7 +162,7 @@ function soundStarted() {
 
 setTimeout(() => {
     modal_window.classList.remove("hidden")
-}, 1000)
+}, 12000)
 
 modal_window.addEventListener("click", event => {
     const target = event.target
