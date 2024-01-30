@@ -38,8 +38,8 @@ class Cat {
     }
 
     addAction(name, cb) {
-        const object = this.state[name]
-        print(this)
+        const object = Object.assign({},this.state[name])
+        print(object)
         object.cb = cb
         this.buffer.push(object)
 
@@ -49,6 +49,7 @@ class Cat {
     removeAction(obj){
         print(obj)
         const index = this.buffer.indexOf(obj)
+        print(index)
         if(index === -1){
             print("обьект не найден")
             return false
@@ -104,7 +105,7 @@ const Bug = new Cat([
     { name: "base", root: images, url: ["./img//basic/f_", ".png"], number: 20 },
     { name: "blink", root: images, url: ["./img/blink/hh_", ".png"], number: 20 }
 ])
-Bug.addAction("base", () => print(123))
+Bug.addAction("base", () => print("Туц туц"))
 
 // setTimeout(() => {
     
