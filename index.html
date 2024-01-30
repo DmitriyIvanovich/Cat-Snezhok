@@ -9,6 +9,7 @@
     <title>Snezhok</title>
     <style>
         body {
+            margin: 0;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -26,9 +27,9 @@
             height: 250px;
         }
 
-        #images > * {
+        #images>* {
             position: absolute;
-            bottom:0;
+            bottom: 0;
             height: 100%;
         }
 
@@ -36,7 +37,8 @@
 
             transform: translate(1px, 2px);
         }
-        img{
+
+        img {
             height: 100%;
         }
 
@@ -47,16 +49,74 @@
             text-transform: uppercase;
             letter-spacing: 20px;
         }
+
+        #modal_window {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.767);
+            backdrop-filter: blur(4px);
+            z-index: 2;
+
+            font-size: 30px;
+        }
+        #modal_window.hidden{
+            display: none;
+        }
+
+        #modal_window>.wrapper {
+            font-size: 50px;
+            font-weight: 800;
+            text-align: center;
+            padding: 10px 20px;
+            /* background-color: rgb(255, 253, 253); */
+
+            border-radius: 5px;
+        }
+
+        #modal_window .buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+            font-size: 30px;
+            font-weight: 300;
+        }
+
+        #modal_window .button {
+            cursor: pointer;
+            margin: 0 20px;
+            padding: 3px 15px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.212);
+            border-radius: 20px;
+        }
+
+        #modal_window .button:hover {
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(0, 0, 0);
+        }
     </style>
 </head>
 
 <body>
+    <div id="modal_window" class="hidden">
+        <div class="wrapper">
+            <span>?</span>
+            <div class="buttons">
+                <div class="button no">Нет</div>
+                <div class="button yes">Да</div>
+            </div>
+        </div>
+    </div>
     <div id="root">
         <div id="images">
             <!-- <img src="./img//basic/f_00.png" alt="" id="stub"> -->
         </div>
-        <div class="text">click</вшм>
-        </div>
+        <div class="text">click</div>
+    </div>
 </body>
 <script src="./index.js"></script>
 

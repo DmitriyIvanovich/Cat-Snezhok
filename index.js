@@ -138,28 +138,48 @@ const Bug = new Cat([
 ])
 
 Bug.addAction("base", () => print("Туц туц"))
-Bug.__run(1)
+// Bug.__run(1)
+
+// document.addEventListener("click", () => {
+Bug.__run()
 
 document.addEventListener("click", () => {
-    Bug.__run()
-
-    document.addEventListener("click", () => {
-        Bug.addAction("blink", (action) => Bug.removeAction(action))
-    })
-}, { once: true })
-
-document.addEventListener("DOMContentLoaded", sound);
+    Bug.addAction("blink", (action) => Bug.removeAction(action))
+})
+// }, { once: true })
 
 
 
-function sound() {
+
+
+function soundStarted() {
     document.body.insertAdjacentHTML("beforeend", `<audio id="bg_sound" src="./sound/track_1.mp3"></audio>`)
-    document.addEventListener('click', event => {
-        const bgcPlayer = document.getElementById('bg_sound');
-        bgcPlayer.volume = 0.15;
-        bgcPlayer.muted = true;
-        bgcPlayer.muted = false;
-        bgcPlayer.play();
-        bgcPlayer.loop = true;
-    }, { once: true });
+
+
+    const bgcPlayer = document.getElementById('bg_sound');
+    bgcPlayer.volume = 0.15;
+    bgcPlayer.muted = true;
+    bgcPlayer.muted = false;
+    bgcPlayer.play()
+    bgcPlayer.loop = true;
 }
+
+
+setTimeout(() => {
+    modal_window.classList.remove("hidden")
+
+}, 1000)
+
+modal_window.addEventListener("click", event => {
+    const target = event.target
+    if (target.closest(".button.no")) {
+        print("no")
+        modal_window.remove()
+        return
+    }
+    if (target.closest(".button.yes")) {
+        soundStarted()
+        modal_window.remove()
+        return
+    }
+})
