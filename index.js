@@ -11,16 +11,15 @@ class Cat {
             this.state[obj.name] = obj
             this.__createState(this.state[obj.name])
         }
-
+        
         this.buffer = []
+        this.buffer.limitation = 5
         this.buffer.currentState
 
         setInterval(() => { this.runState() }, 40)
     }
 
     __createState(obj) {
-        print(obj)
-
         obj.root.insertAdjacentHTML("afterbegin", `<div class="${obj.name}"></div>`)
 
         const wrapper = obj.root.querySelector(`.${obj.name}`)
@@ -34,12 +33,14 @@ class Cat {
         obj.wrapper = wrapper
         obj.imgs = wrapper.querySelectorAll("img")
 
-        print(obj)
     }
 
     addAction(name, cb) {
+        if (this.buffer.length >= this.buffer.limitation){
+            print("Буфер очереди состояний переполнен. Величина очереди:", this.buffer.length)
+            return false
+        }
         const object = Object.assign({},this.state[name])
-        print(object)
         object.cb = cb
         this.buffer.push(object)
 
@@ -47,9 +48,7 @@ class Cat {
     }
 
     removeAction(obj){
-        print(obj)
         const index = this.buffer.indexOf(obj)
-        print(index)
         if(index === -1){
             print("обьект не найден")
             return false
