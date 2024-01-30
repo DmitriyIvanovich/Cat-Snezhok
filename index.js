@@ -140,13 +140,13 @@ const Bug = new Cat([
 Bug.addAction("base", () => print("Туц туц"))
 Bug.__run(1)
 
-document.addEventListener("click", () =>{
+document.addEventListener("click", () => {
     Bug.__run()
 
     document.addEventListener("click", () => {
         Bug.addAction("blink", (action) => Bug.removeAction(action))
     })
-}, {once: true})
+}, { once: true })
 
 document.addEventListener("DOMContentLoaded", sound);
 
@@ -156,10 +156,10 @@ function sound() {
     document.body.insertAdjacentHTML("beforeend", `<audio id="bg_sound" src="./sound/track_1.mp3"></audio>`)
     document.addEventListener('click', event => {
         const bgcPlayer = document.getElementById('bg_sound');
-        bgcPlayer.volume = 0.2;
+        bgcPlayer.volume = 0.15;
         bgcPlayer.muted = true;
         bgcPlayer.muted = false;
         bgcPlayer.play();
         bgcPlayer.loop = true;
-    });
+    }, { once: true });
 }
