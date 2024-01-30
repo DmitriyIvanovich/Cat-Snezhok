@@ -148,13 +148,8 @@ document.addEventListener("click", () => {
 })
 // }, { once: true })
 
-
-
-
-
 function soundStarted() {
     document.body.insertAdjacentHTML("beforeend", `<audio id="bg_sound" src="./sound/track_1.mp3"></audio>`)
-
 
     const bgcPlayer = document.getElementById('bg_sound');
     bgcPlayer.volume = 0.15;
@@ -167,7 +162,6 @@ function soundStarted() {
 
 setTimeout(() => {
     modal_window.classList.remove("hidden")
-
 }, 1000)
 
 modal_window.addEventListener("click", event => {
